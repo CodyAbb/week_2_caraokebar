@@ -15,6 +15,8 @@ class KaraokeBarTest < Minitest::Test
     @guests = [@guest1, @guest2]
 
     @guest3 = Guest.new("Sam", 3, "Song 2")
+    @guest4 = Guest.new("Sandra", 25, "F**k The Police")
+    @guest5 = Guest.new("Owen", 30, "Dignity")
 
     @song1 = Song.new("Angels", "Robbie Williams")
     @song2 = Song.new("Say it ain't so", "Weezer")
@@ -54,4 +56,37 @@ class KaraokeBarTest < Minitest::Test
     @karaoke_bar.put_guest_into_room(@guest1, @room1)
     assert_equal(1, @room1.occupants.length)
   end
+
+  def test_check_guest_out_of_room
+    @karaoke_bar.put_guest_into_room(@guest1, @room1)
+    @karaoke_bar.put_guest_into_room(@guest2, @room1)
+    @karaoke_bar.check_guest_out(@guest1, @room1)
+
+    assert_equal(1, @room1.occupants.length)
+  end
+
+  def test_check_capacity
+    @karaoke_bar.put_guest_into_room(@guest1, @room1)
+    @karaoke_bar.put_guest_into_room(@guest2, @room1)
+    result = @karaoke_bar.full_capacity_check(@room1)
+
+    assert_equal(false, result)
+  end
+
+  def test_check_capacity_over
+    @karaoke_bar.put_guest_into_room(@guest1, @room1)
+    @karaoke_bar.put_guest_into_room(@guest2, @room1)
+    @karaoke_bar.put_guest_into_room(@guest4, @room1)
+    @karaoke_bar.put_guest_into_room(@guest5, @room1)
+
+    result = @karaoke_bar.full_capacity_check(@room1)
+
+    assert_equal(true, result)
+  end
+
+  # def test_move_guest_to_new_room
+  #
+  # end
+
+
 end

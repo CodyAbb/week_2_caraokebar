@@ -29,4 +29,12 @@ class KaraokeBar
     end
   end
 
+  def check_guest_out(guest, room)
+    room.remove_guest_from_room(guest)
+  end
+
+  def full_capacity_check(room)
+    room.occupants.length > 3 ? true : false
+  end
+
 end

@@ -11,6 +11,10 @@ class Room
     @occupants.push(guest)
   end
 
+  def remove_guest_from_room(guest)
+    @occupants.delete(guest)
+  end
+
   def add_songs_to_playlist(song)
     @playlist.concat(song)
   end
