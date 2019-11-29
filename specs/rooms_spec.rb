@@ -23,7 +23,8 @@ class RoomTest < Minitest::Test
   end
 
   def test_num_of_guests_in_room
-    @room.add_guest_to_room(@guests)
+    @room.add_guest_to_room(@guest1)
+    @room.add_guest_to_room(@guest3)
     assert_equal(2, @room.occupants.length)
   end
 

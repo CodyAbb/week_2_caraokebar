@@ -8,7 +8,7 @@ class Room
   end
 
   def add_guest_to_room(guest)
-    @occupants.concat(guest)
+    @occupants.push(guest)
   end
 
   def add_songs_to_playlist(song)
