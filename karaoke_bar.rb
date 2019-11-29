@@ -22,13 +22,6 @@ class KaraokeBar
     @till += @entry_cost
   end
 
-  def put_guest_into_room(guest, room)
-    if customer_money_check(guest) == true
-      increase_till_money()
-      room.add_guest_to_room(guest)
-    end
-  end
-
   def check_guest_out(guest, room)
     room.remove_guest_from_room(guest)
   end
@@ -37,4 +30,15 @@ class KaraokeBar
     room.occupants.length > 3 ? true : false
   end
 
+  def put_guest_into_room(guest, room)
+    if customer_money_check(guest) == true && full_capacity_check(room) == false
+      increase_till_money()
+      guest.take_customer_payment(entry_cost)
+      room.add_guest_to_room(guest)
+    elsif customer_money_check(guest) == true && full_capacity_check(room)== true
+      increase_till_money()
+      guest.take_customer_payment(entry_cost)
+      @rooms[1].add_guest_to_room
+    end
+  end
 end
