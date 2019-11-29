@@ -12,7 +12,7 @@ class Room
   end
 
   def add_songs_to_playlist(song)
-    @playlist << song
+    @playlist.concat(song)
   end
 
 end
