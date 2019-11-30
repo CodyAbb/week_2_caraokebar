@@ -33,4 +33,11 @@ class RoomTest < Minitest::Test
     assert_equal(3, @room.playlist.length)
   end
 
+  # def test_favourite_song_returns_wooo
+  #   @room.add_songs_to_playlist(@songs)
+  #   @room.add_guest_to_room(@guest1)
+  #   result = @room.check_favourite_song
+  #   assert_equal("Whoo!", result)
+  # end
+
 end

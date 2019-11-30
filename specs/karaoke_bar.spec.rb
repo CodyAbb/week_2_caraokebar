@@ -1,5 +1,6 @@
 require('minitest/autorun')
 require('minitest/reporters')
+
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative('../karaoke_bar')
 require_relative('../rooms')
@@ -30,6 +31,7 @@ class KaraokeBarTest < Minitest::Test
 
     @room1 = Room.new([], @songs)
     @room2 = Room.new([], @songs2)
+    @venue_rooms = [@room1, @room2]
 
     @karaoke_bar = KaraokeBar.new("SugarCube", 5, 100, [@room1, @room2])
   end
@@ -58,42 +60,31 @@ class KaraokeBarTest < Minitest::Test
   end
 
   def test_add_get_to_room_once_paid
-    @karaoke_bar.put_guest_into_room(@guest1, @room1)
+    @karaoke_bar.put_guest_into_room(@guest1, [@room1])
     assert_equal(1, @room1.occupants.length)
   end
 
   def test_check_guest_out_of_room
-    @karaoke_bar.put_guest_into_room(@guest1, @room1)
-    @karaoke_bar.put_guest_into_room(@guest2, @room1)
+    @karaoke_bar.put_guest_into_room(@guest1, [@room1])
+    @karaoke_bar.put_guest_into_room(@guest2, [@room1])
     @karaoke_bar.check_guest_out(@guest1, @room1)
 
     assert_equal(1, @room1.occupants.length)
   end
 
   def test_check_capacity
-    @karaoke_bar.put_guest_into_room(@guest1, @room1)
-    @karaoke_bar.put_guest_into_room(@guest2, @room1)
+    @karaoke_bar.put_guest_into_room(@guest1, [@room1])
+    @karaoke_bar.put_guest_into_room(@guest2, [@room1])
     result = @karaoke_bar.full_capacity_check(@room1)
 
     assert_equal(false, result)
   end
 
-  def test_check_capacity_over
-    @karaoke_bar.put_guest_into_room(@guest1, @room1)
-    @karaoke_bar.put_guest_into_room(@guest2, @room1)
-    @karaoke_bar.put_guest_into_room(@guest4, @room1)
-    @karaoke_bar.put_guest_into_room(@guest5, @room1)
-
-    result = @karaoke_bar.full_capacity_check(@room1)
-
-    assert_equal(true, result)
-  end
-
-  def test_move_guest_to_new_room
-    @karaoke_bar.put_guest_into_room(@guest1, @room1)
-    @karaoke_bar.put_guest_into_room(@guest2, @room1)
-    @karaoke_bar.put_guest_into_room(@guest4, @room1)
-    @karaoke_bar.put_guest_into_room(@guest5, @room1)
+  def test_move_guest_to_new_room_when_capacity_is_true
+    @karaoke_bar.put_guest_into_room(@guest1, [@room1, @room2])
+    @karaoke_bar.put_guest_into_room(@guest2, [@room1, @room2])
+    @karaoke_bar.put_guest_into_room(@guest4, [@room1, @room2])
+    @karaoke_bar.put_guest_into_room(@guest5, [@room1, @room2])
 
     assert_equal(3, @room1.occupants.length)
     assert_equal(1, @room2.occupants.length)
