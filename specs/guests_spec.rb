@@ -31,7 +31,7 @@ class GuestsTest < Minitest::Test
   end
 
   def test_return_true_matching_favourite_song
-    assert_equal(true, @guest.check_favourite_song(@songs))
+    assert_equal("Whoo!", @guest.check_favourite_song(@songs))
   end
 
   def test_return_false_matching_favourite_song

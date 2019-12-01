@@ -14,7 +14,11 @@ class Guest
 
   def check_favourite_song(songs)
     song_titles = songs.map { |song| song.title  }
-    song_titles.include? @favourite_song
+    if song_titles.include? @favourite_song
+      return "Whoo!"
+    else
+      return false 
+    end
   end
 
 end
